@@ -13,18 +13,14 @@
             class="text-emerald-400 hover:text-emerald-300 transition-colors p-1 rounded-lg hover:bg-emerald-400/10"
             title="Confirm Delete"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
+            <font-awesome-icon icon="check" class="h-5 w-5" />
           </button>
           <button 
             @click.stop="$emit('cancelDelete')" 
             class="text-slate-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
             title="Cancel"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <font-awesome-icon icon="times" class="h-5 w-5" />
           </button>
         </div>
         <button 
@@ -33,9 +29,7 @@
           class="text-slate-500 hover:text-red-400 transition-colors p-1 rounded-lg hover:bg-red-400/10"
           title="Delete List"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-          </svg>
+          <font-awesome-icon icon="trash" class="h-5 w-5" />
         </button>
       </transition>
     </div>
@@ -54,7 +48,7 @@
     
     <div class="mt-6 pt-4 border-t border-white/5 flex justify-between items-center text-xs text-slate-500 font-medium tracking-wider uppercase">
       <!-- <span>Created {{ formattedDate }}</span> -->
-      <span class="text-indigo-400/70 group-hover:text-indigo-400">View List -></span>
+      <span class="text-indigo-400/70 group-hover:text-indigo-400">View List <font-awesome-icon icon="arrow-right" class="ml-1 transition-transform group-hover:translate-x-1" /></span>
     </div>
   </div>
 </template>

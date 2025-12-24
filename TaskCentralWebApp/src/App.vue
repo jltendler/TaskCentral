@@ -4,10 +4,10 @@
       <div class="container mx-auto px-6 py-4 flex justify-between items-center">
         <router-link to="/" class="text-2xl font-extrabold text-white flex items-center gap-2 group">
           <span class="transition-transform group-hover:scale-110">
-            <svg class="h-8 w-8" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="8" class="text-yellow-400" />
-              <path d="M30 52 L45 67 L75 37" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" class="text-red-400" />
-            </svg>
+            <font-awesome-icon 
+              icon="check-circle" 
+              class="h-8 w-8 text-yellow-400" 
+            />
           </span> 
           <span class="bg-clip-text text-transparent bg-gradient-to-br from-yellow-400 to-red-400">TaskCentral</span> <!--quick gradient using TW -->
         </router-link>
