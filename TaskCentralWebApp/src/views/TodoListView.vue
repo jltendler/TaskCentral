@@ -9,7 +9,6 @@
         </router-link>
       </div>
     </div>
-    <!-- Add Item Box -->
     <div class="glass p-6 mb-8 flex gap-4 items-center focus-within:border-indigo-500/50 transition-colors shadow-xl">
       <div class="flex-grow">
         <input 
@@ -29,7 +28,7 @@
           class="h-5 w-5 transition-colors"
           :class="newItem.isPriority ? 'text-amber-500' : 'text-slate-400 hover:text-slate-300'"
         />
-        <!-- wow this syntax is excellent for dynamic tailwinds classes, react components always needed twmerge()-->
+        <!-- wow this syntax is excellent for dynamic tailwinds classes, seems to bypass the need for twmerge()-->
       </button>
       <button @click="addItem" class="btn btn-primary h-[50px] px-8">Add Task</button>
     </div>
@@ -151,7 +150,7 @@
       </div>
 
       <div v-if="items.length === 0" class="glass border-dashed p-12 text-center text-slate-500">
-        <p>No tasks in this list. Time to get productive!</p>
+        <p>No tasks in this list. Add some above!</p>
       </div>
     </div>
   </div>

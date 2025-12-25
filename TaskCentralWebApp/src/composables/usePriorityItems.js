@@ -80,7 +80,6 @@ export function usePriorityItems() {
 
     onMounted(() => {
         fetchPriorityItems();
-        // Poll every 60 seconds
         pollInterval = setInterval(fetchPriorityItems, POLL_TIME);
     });
 

@@ -6,13 +6,13 @@
           <span class="transition-transform group-hover:scale-110">
             <img src="/favicon.svg" alt="Logo" class="h-8 w-8" />
           </span> 
-          <span class="bg-clip-text text-transparent bg-gradient-to-br from-yellow-400 to-red-400">TaskCentral</span> <!--quick gradient using TW -->
+          <!--neat little gradient using tailwinds -->
+          <span class="bg-clip-text text-transparent bg-gradient-to-br from-yellow-400 to-red-400">TaskCentral</span> 
         </router-link>
       </div>
     </nav>
     
     <div class="flex-grow flex flex-col lg:flex-row">
-      <!-- Main Content Area -->
       <main class="flex-grow px-6 pb-12 min-w-0">
         <div class="max-w-5xl mx-auto lg:mx-0 xl:mx-auto">
           <router-view v-slot="{ Component }">
@@ -31,8 +31,6 @@
           </router-view>
         </div>
       </main>
-
-      <!-- Sidebar (Flush Right) -->
       <PrioritySidebar />
     </div>
   </div>
