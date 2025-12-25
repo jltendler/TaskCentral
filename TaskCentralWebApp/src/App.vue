@@ -4,10 +4,7 @@
       <div class="container mx-auto px-6 py-4 flex justify-between items-center">
         <router-link to="/" class="text-2xl font-extrabold text-white flex items-center gap-2 group">
           <span class="transition-transform group-hover:scale-110">
-            <font-awesome-icon 
-              icon="check-circle" 
-              class="h-8 w-8 text-yellow-400" 
-            />
+            <img src="/favicon.svg" alt="Logo" class="h-8 w-8" />
           </span> 
           <span class="bg-clip-text text-transparent bg-gradient-to-br from-yellow-400 to-red-400">TaskCentral</span> <!--quick gradient using TW -->
         </router-link>
@@ -19,11 +16,12 @@
       <main class="flex-grow px-6 pb-12 min-w-0">
         <div class="max-w-5xl mx-auto lg:mx-0 xl:mx-auto">
           <router-view v-slot="{ Component }">
+            <!-- spiffy page transitions, the translate is a little much, but it's fun. -->
             <transition 
-              enter-active-class="transition duration-300 ease-out"
+              enter-active-class="transition duration-100 ease-out"
               enter-from-class="opacity-0 translate-y-4"
               enter-to-class="opacity-100 translate-y-0"
-              leave-active-class="transition duration-200 ease-in"
+              leave-active-class="transition duration-100 ease-in"
               leave-from-class="opacity-100 translate-y-0"
               leave-to-class="opacity-0 translate-y-4"
               mode="out-in"

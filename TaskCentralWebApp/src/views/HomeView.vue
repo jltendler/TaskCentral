@@ -1,7 +1,7 @@
 <template>
   <div class="animate-fade-in">
     <div class="flex justify-between items-center mb-10">
-      <h1 class="text-4xl font-black text-white tracking-tight">My Todo Lists</h1>
+      <h1 class="text-4xl font-black text-white tracking-tight">Todo Lists</h1>
       <button @click="showAddModal = true" class="btn btn-primary">
         <span class="mr-2 text-lg">+</span> Create New List
       </button>

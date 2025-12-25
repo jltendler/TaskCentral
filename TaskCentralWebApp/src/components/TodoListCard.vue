@@ -39,9 +39,7 @@
         <span class="text-indigo-400">({{ completedCount }} / {{ list.items?.length || 0 }})</span> items
       </p>
       <div v-if="priorityCount > 0" class="flex items-center gap-1 text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-black">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-        </svg>
+        <font-awesome-icon icon="star" class="h-3 w-3" />
         {{ priorityCount }}
       </div>
     </div>

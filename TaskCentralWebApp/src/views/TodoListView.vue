@@ -2,11 +2,11 @@
   <div class="animate-fade-in">
     <div class="mb-10 flex justify-between items-end">
       <div>
-        <router-link to="/" class="inline-flex items-center text-slate-500 hover:text-indigo-400 mb-4 transition-colors font-medium">
+        <h1 class="text-4xl font-black text-white tracking-tight mb-4">{{ list?.name }}</h1>
+        <router-link to="/" class="inline-flex items-center text-slate-500 hover:text-indigo-400 transition-colors font-medium">
           <font-awesome-icon icon="arrow-left" class="mr-1 h-3.5 w-3.5" />
           Back to Lists
         </router-link>
-        <h1 class="text-4xl font-black text-white tracking-tight">{{ list?.name }}</h1>
       </div>
     </div>
     <!-- Add Item Box -->
@@ -29,6 +29,7 @@
           class="h-5 w-5 transition-colors"
           :class="newItem.isPriority ? 'text-amber-500' : 'text-slate-400 hover:text-slate-300'"
         />
+        <!-- wow this syntax is excellent for dynamic tailwinds classes, react components always needed twmerge()-->
       </button>
       <button @click="addItem" class="btn btn-primary h-[50px] px-8">Add Task</button>
     </div>
@@ -52,7 +53,7 @@
           @click="uncheckAll" 
           class="text-sm font-bold text-slate-400 hover:text-slate-300 transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-slate-400/10"
         >
-          <font-awesome-icon icon="times" /> <!-- swapping uncheck for a simple X might be better, but let's stick to trash/check variants or icon check-double -->
+          <font-awesome-icon icon="times" />
           Uncheck All
         </button>
       </div>
