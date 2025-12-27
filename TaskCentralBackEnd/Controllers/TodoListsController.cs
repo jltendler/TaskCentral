@@ -63,7 +63,7 @@ namespace TaskCentralBackEnd.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException) //Happens when 0 rows are impacted by the update.
             {
                 if (!TodoListExists(id))
                 {
@@ -87,7 +87,8 @@ namespace TaskCentralBackEnd.Controllers
             {
                 return NotFound();
             }
-
+            //Delete all items in the list to avoid orphaned items.
+            _context.TodoItems.RemoveRange(todoList.Items);
             _context.TodoLists.Remove(todoList);
             await _context.SaveChangesAsync();
 

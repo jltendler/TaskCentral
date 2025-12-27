@@ -9,12 +9,10 @@ export function useTodoItems(listIdSource) {
         return typeof val === 'function' ? val() : val;
     });
     const {
-        invalidateAllCaches,
         updateItemInCaches,
-        removeItemFromCaches,
         addItemToCaches
     } = useItemCache();
-    const { updatedItemEvent } = useItemEventBus();
+    const { updatedItemEvent, emitRefreshAll } = useItemEventBus();
     const list = ref(null);
     const items = ref([]);
     const loading = ref(true);
@@ -56,10 +54,25 @@ export function useTodoItems(listIdSource) {
 
     const toggleItem = async (item) => {
         try {
+            const newIsCompleted = !item.isCompleted;
+
             await todoItemService.updateItem(listId.value, item.id, {
                 ...item,
-                isCompleted: !item.isCompleted
+                isCompleted: newIsCompleted
             });
+
+            updateItemInCaches(item.id, { isCompleted: newIsCompleted });
+
+            if (!newIsCompleted) {
+                const fullItem = {
+                    ...item,
+                    isCompleted: newIsCompleted,
+                    todoList: list.value
+                };
+                // If uncompleting, checks if it needs to be added back to DueSoon/Overdue/Priority
+                addItemToCaches(fullItem);
+            }
+
             await fetchData();
         } catch (error) {
             console.error('Error toggling item:', error);
@@ -74,23 +87,17 @@ export function useTodoItems(listIdSource) {
                 isPriority: newPriorityStatus
             });
 
-            // Update priority cache immediately with full item data including todoList
             if (newPriorityStatus) {
-                // Need to get the list name from current data
                 const fullItem = {
                     ...item,
                     isPriority: true,
-                    todoList: list.value // Include the parent list
+                    todoList: list.value
                 };
                 addItemToCaches(fullItem);
             } else {
-                // We update the item in caches to reflect the priority change
-                // updateItemInCaches handles removing it from priority cache if isPriority becomes false
                 updateItemInCaches(item.id, { isPriority: false });
             }
 
-            // Invalidate caches to be safe
-            invalidateAllCaches();
 
             await fetchData();
         } catch (error) {
@@ -101,6 +108,7 @@ export function useTodoItems(listIdSource) {
     const checkAll = async () => {
         try {
             await todoItemService.completeAll(listId.value);
+            emitRefreshAll();
             await fetchData();
         } catch (error) {
             console.error('Error checking all items:', error);
@@ -110,6 +118,7 @@ export function useTodoItems(listIdSource) {
     const uncheckAll = async () => {
         try {
             await todoItemService.uncompleteAll(listId.value);
+            emitRefreshAll();
             await fetchData();
         } catch (error) {
             console.error('Error unchecking all items:', error);
@@ -188,18 +197,18 @@ export function useTodoItems(listIdSource) {
 
     const setDueDate = async (item, dueDate) => {
         try {
-            // Strip navigation properties to avoid EF Core issues
-            const { todoList, ...cleanItem } = item;
-
             await todoItemService.updateItem(listId.value, item.id, {
-                ...cleanItem,
+                ...item,
                 dueDate: dueDate
             });
 
-            // Invalidate all caches to refresh sidebar sections
-            invalidateAllCaches();
+            updateItemInCaches(item.id, { dueDate });
+            addItemToCaches({
+                ...item,
+                dueDate,
+                todoList: list.value
+            });
 
-            // Notify other components (sidebar) that an update occurred
             updatedItemEvent.value = { ...item, dueDate, timestamp: Date.now() };
 
             await fetchData();

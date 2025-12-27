@@ -7,12 +7,23 @@
       </button>
     </div>
 
-    <div v-if="loading" class="flex flex-col items-center justify-center py-20 text-slate-400">
-      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-500 mb-4"></div>
+    <!-- Demo Data Button (Only show if no lists) -->
+    <div v-if="lists.length === 0 && !loading" class="mb-8 text-center">
+        <button 
+            @click="runSeeder" 
+        >
+            <font-awesome-icon :icon="isSeeding ? 'spinner' : 'database'" :spin="isSeeding" class="mr-2" />
+            <span v-if="isSeeding">Seeding DB with demo data...</span>
+            <span v-else>Seed DB with demo data</span>
+        </button>
+    </div>
+
+    <div v-if="loading" class="flex flex-col items-center justify-center py-20 text-slate-normal">
+      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mb-4"></div>
       <p>Loading your tasks...</p>
     </div>
 
-    <div v-else-if="lists.length === 0" class="glass p-16 text-center text-slate-400">
+    <div v-else-if="lists.length === 0" class="glass p-16 text-center text-slate-normal">
       <p class="text-lg">No todo lists found. Create your first one!</p>
     </div>
 
@@ -39,6 +50,7 @@
 
 <script setup>
 import { useTodoLists } from '../composables/useTodoLists';
+import { useSeeder } from '../composables/useSeeder';
 import TodoListCard from '../components/TodoListCard.vue';
 import NewListModal from '../components/NewListModal.vue';
 
@@ -53,6 +65,16 @@ const {
   cancelDelete,
   deleteList,
   goToList,
-  formatDate
+  formatDate,
+  fetchLists
 } = useTodoLists();
+
+const { seed, isSeeding } = useSeeder();
+
+const runSeeder = async () => {
+    await seed(() => {
+        // Refresh lists after seeding
+        fetchLists();
+    });
+};
 </script>

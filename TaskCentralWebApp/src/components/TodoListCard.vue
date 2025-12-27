@@ -1,31 +1,33 @@
 <template>
-  <div 
-    class="glass p-6 cursor-pointer group hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col" 
+  <div
+    class="glass p-6 hover:shadow-lg hover:shadow-primary/20 hover:scale-[1.02] transition-all duration-300 cursor-pointer group flex flex-col h-full border border-white/5 hover:border-primary/30 relative overflow-hidden"
     @click="$emit('click')"
   >
+  <!-- A little bit of pizazz in the top right corner of cards -->
+    <div class="absolute top-0 right-0 w-12 h-12 bg-primary/10 rounded-bl-full -mr-5 -mt-5 transition-transform group-hover:scale-110"></div>
     <div class="flex justify-between items-start mb-4">
-      <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">{{ list.name }}</h3>
+      <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">{{ list.name }}</h3>
       <transition name="fade-scale" mode="out-in">
         <div v-if="isDeleting" class="flex items-center gap-1">
           <span class="text-xs">Really Delete?</span>
-          <button 
-            @click.stop="$emit('delete', list.id)" 
+          <button
+            @click.stop="$emit('delete', list.id)"
             class="text-emerald-400 hover:text-emerald-300 transition-colors p-1 rounded-lg hover:bg-emerald-400/10"
             title="Confirm Delete"
           >
             <font-awesome-icon icon="check" class="h-5 w-5" />
           </button>
-          <button 
-            @click.stop="$emit('cancelDelete')" 
+          <button
+            @click.stop="$emit('cancelDelete')"
             class="text-slate-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
             title="Cancel"
           >
             <font-awesome-icon icon="times" class="h-5 w-5" />
           </button>
         </div>
-        <button 
+        <button
           v-else-if="!list.items?.length || list.items.every(i => i.isCompleted)"
-          @click.stop="$emit('requestDelete', list.id)" 
+          @click.stop="$emit('requestDelete', list.id)"
           class="text-slate-500 hover:text-red-400 transition-colors p-1 rounded-lg hover:bg-red-400/10"
           title="Delete List"
         >
@@ -33,12 +35,12 @@
         </button>
       </transition>
     </div>
-    
-    <div class="flex items-center gap-4 text-sm font-medium">
-      <p class="text-slate-400">
-        <span class="text-indigo-400">({{ completedCount }} / {{ list.items?.length || 0 }})</span> items
+
+    <div class="flex items-center gap-3 text-sm font-medium mb-4">
+      <p class="text-slate-normal">
+        <span class="text-primary">({{ completedCount }} / {{ list.items?.length || 0 }})</span> items
       </p>
-      <div v-if="priorityCount > 0" class="flex items-center gap-1 text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-black">
+      <div v-if="priorityCount > 0" class="flex items-center gap-1 text-warning bg-warning/10 px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-black">
         <font-awesome-icon icon="star" class="h-3 w-3" />
         {{ priorityCount }}
       </div>

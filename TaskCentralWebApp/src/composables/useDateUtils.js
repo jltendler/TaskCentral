@@ -30,7 +30,7 @@ export const formatDueDate = (dueDate) => {
 // Helper function to get color class based on due date
 export const getDueDateColor = (dueDate) => {
     const date = parseLocalDate(dueDate);
-    if (!date) return 'text-slate-400';
+    if (!date) return 'text-slate-normal';
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -38,7 +38,7 @@ export const getDueDateColor = (dueDate) => {
     const sevenDaysFromNow = new Date(today);
     sevenDaysFromNow.setDate(today.getDate() + 7);
 
-    if (date < today) return 'text-red-400'; // Overdue
-    if (date <= sevenDaysFromNow) return 'text-blue-400'; // Due soon
-    return 'text-slate-400'; // Future
+    if (date < today) return 'text-danger font-bold'; // Overdue
+    if (date <= sevenDaysFromNow) return 'text-info font-bold'; // Due soon
+    return 'text-slate-normal'; // Future
 };

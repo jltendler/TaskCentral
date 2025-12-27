@@ -84,23 +84,23 @@ describe('useDateUtils', () => {
 
     describe('getDueDateColor', () => {
         it('should return red for overdue dates', () => {
-            expect(getDueDateColor(YESTERDAY_ISO)).toBe('text-red-400'); // Yesterday
+            expect(getDueDateColor(YESTERDAY_ISO)).toBe('text-danger font-bold'); // Yesterday
 
 
             const MONTH_AGO_DATE = new Date(TODAY);
             MONTH_AGO_DATE.setMonth(TODAY.getMonth() - 1);
             const MONTH_AGO_DATE_ISO = toIsoDate(MONTH_AGO_DATE);
-            expect(getDueDateColor(MONTH_AGO_DATE_ISO)).toBe('text-red-400'); // Last month
+            expect(getDueDateColor(MONTH_AGO_DATE_ISO)).toBe('text-danger font-bold'); // Last month
         });
 
         it('should return blue for dates due soon (within 7 days)', () => {
-            expect(getDueDateColor(TODAY_ISO)).toBe('text-blue-400');
-            expect(getDueDateColor(TOMORROW_ISO)).toBe('text-blue-400');
-            expect(getDueDateColor(SEVEN_DAYS_FROM_NOW_ISO)).toBe('text-blue-400');
+            expect(getDueDateColor(TODAY_ISO)).toBe('text-info font-bold');
+            expect(getDueDateColor(TOMORROW_ISO)).toBe('text-info font-bold');
+            expect(getDueDateColor(SEVEN_DAYS_FROM_NOW_ISO)).toBe('text-info font-bold');
         });
 
         it('should return slate for dates further in the future than 7 days', () => {
-            expect(getDueDateColor(EIGHT_DAYS_FROM_NOW_ISO)).toBe('text-slate-400');
+            expect(getDueDateColor(EIGHT_DAYS_FROM_NOW_ISO)).toBe('text-slate-normal');
         });
     });
 });

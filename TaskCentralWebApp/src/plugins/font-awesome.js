@@ -16,7 +16,9 @@ import {
     faExclamationTriangle,
     faChevronDown,
     faChevronUp,
-    faChevronRight
+    faChevronRight,
+    faDatabase,
+    faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 
 /* Add icons to the library */
@@ -34,7 +36,9 @@ library.add(
     faExclamationTriangle,
     faChevronDown,
     faChevronUp,
-    faChevronRight
+    faChevronRight,
+    faDatabase,
+    faSpinner
 );
 
 export default FontAwesomeIcon;

@@ -157,6 +157,13 @@ export function useItemCache() {
         overdueItemsCache.value = overdueItemsCache.value.filter(item => item.id !== itemId);
     };
 
+    // Remove all items belonging to a specific list
+    const removeListFromCaches = (listId) => {
+        priorityItemsCache.value = priorityItemsCache.value.filter(item => item.todoListId !== listId);
+        dueSoonItemsCache.value = dueSoonItemsCache.value.filter(item => item.todoListId !== listId);
+        overdueItemsCache.value = overdueItemsCache.value.filter(item => item.todoListId !== listId);
+    };
+
     return {
         // Priority
         updatePriorityCache,
@@ -181,6 +188,7 @@ export function useItemCache() {
         updateItemInCaches,
         addItemToCaches,
         removeItemFromCaches,
+        removeListFromCaches,
 
         // Logic helpers
         isDueSoon,

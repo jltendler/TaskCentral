@@ -14,7 +14,7 @@ builder.Services.AddControllers()
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// CORS must be explictly enabled so that the backend can talk to the frontend.
+// CORS must be explictly enabled so that the frontend can talk to the backend.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowVueApp",
@@ -32,7 +32,7 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
 }
 
-// Specify the CORS policy from above
+// Specify the CORS policy from above to be used. (Not sure why you'd define a policy to not use it...thanks .net)
 app.UseCors("AllowVueApp");
 
 app.MapControllers();

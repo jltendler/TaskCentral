@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Personal",
+        "items": [
+            {
+                "title": "Call Mom",
+                "isPriority": true,
+                "dueDateOffset": 0
+            },
+            {
+                "title": "Schedule Dentist Appointment",
+                "isPriority": false,
+                "dueDateOffset": 12
+            },
+            {
+                "title": "Pay Electricity Bill",
+                "isPriority": true,
+                "dueDateOffset": -1
+            }
+        ]
+    },
+    {
+        "name": "Work",
+        "items": [
+            {
+                "title": "Finish Q4 Report",
+                "isPriority": true,
+                "dueDateOffset": 0
+            },
+            {
+                "title": "Email Client about Updates",
+                "isPriority": false,
+                "dueDateOffset": 10
+            },
+            {
+                "title": "Team Meeting",
+                "isPriority": false,
+                "dueDateOffset": 11
+            }
+        ]
+    },
+    {
+        "name": "Groceries",
+        "items": [
+            {
+                "title": "Milk",
+                "isPriority": false,
+                "dueDateOffset": 0
+            },
+            {
+                "title": "Eggs",
+                "isPriority": false,
+                "dueDateOffset": 9
+            },
+            {
+                "title": "Bread",
+                "isPriority": false,
+                "dueDateOffset": 12
+            }
+        ]
+    }
+]

@@ -14,7 +14,7 @@ export function useOverdueItems() {
         isOverdue
     } = useItemCache();
 
-    const { updatedItemEvent } = useItemEventBus();
+    const { updatedItemEvent, refreshAllEvent } = useItemEventBus();
     const router = useRouter();
     const loading = ref(true);
     const pollInterval = ref(null);
@@ -47,27 +47,13 @@ export function useOverdueItems() {
         fetchOverdueItems();
     });
 
+    watch(refreshAllEvent, () => {
+        fetchOverdueItems();
+    });
+
     // callback if the user clicks on a list item in the sidebar
     const goToList = (listId) => {
         router.push(`/list/${listId}`);
-    };
-
-    const toggleItem = async (item) => {
-        try {
-            const newCompletedStatus = !item.isCompleted;
-
-            updateItemInCaches(item.id, { isCompleted: newCompletedStatus });
-
-            await todoItemService.updateItem(item.todoListId, item.id, {
-                ...item, // use spread operator to keep everything the same, except the completed status
-                isCompleted: newCompletedStatus
-            });
-
-            await fetchOverdueItems();
-        } catch (error) {
-            console.error('Error toggling item:', error);
-            await fetchOverdueItems();
-        }
     };
 
     const sortedOverdueItems = computed(() => {
@@ -97,7 +83,6 @@ export function useOverdueItems() {
         items: sortedOverdueItems,
         loading,
         fetchOverdueItems,
-        goToList,
-        toggleItem
+        goToList
     };
 }

@@ -44,7 +44,7 @@ namespace TaskCentralBackEnd.Controllers
         [HttpGet("/api/todoitems/overdue")]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetOverdueItems()
         {
-            // Use a wider range (including today/tomorrow) so the client can filter strictly locally.
+            // Use a wider range (including today/tomorrow) so the client can filter locally with timezone context.
             var tomorrow = DateTime.UtcNow.AddDays(1).Date;
             
             return await _context.TodoItems

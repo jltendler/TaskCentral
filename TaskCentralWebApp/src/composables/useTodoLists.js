@@ -1,10 +1,36 @@
 import { ref, onMounted, nextTick, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { todoListService } from '../services/api';
+import { useItemEventBus } from './useItemEventBus';
+import { useItemCache } from './useItemCache';
 
 export function useTodoLists() {
     const router = useRouter();
+    const { updatedItemEvent, emitRefreshAll, refreshAllEvent } = useItemEventBus();
+    const { removeListFromCaches } = useItemCache();
     const lists = ref([]);
+
+    // Watch for single item updates from the sidebar to update dashboard counters
+    watch(updatedItemEvent, (newItemData) => {
+        if (!newItemData || !lists.value) return;
+
+        for (const list of lists.value) {
+            const itemIndex = list.items?.findIndex(i => i.id === newItemData.id);
+            if (itemIndex !== -1) {
+                list.items[itemIndex] = {
+                    ...list.items[itemIndex],
+                    ...newItemData
+                };
+                break;
+            }
+        }
+    });
+
+    // Refresh entire dashboard on global events (check all, uncheck all, seeding, etc)
+    watch(refreshAllEvent, () => {
+        fetchLists();
+    });
+
     const loading = ref(true);
     const showAddModal = ref(false);
     const newList = ref({ name: '' });
@@ -45,8 +71,12 @@ export function useTodoLists() {
 
     const deleteList = async (id) => {
         try {
+            // Optimistically remove associated items from sidebar caches
+            removeListFromCaches(id);
+
             await todoListService.deleteList(id);
             listIdDeleting.value = null;
+            emitRefreshAll();
             await fetchLists();
         } catch (error) {
             console.error('Error deleting list:', error);

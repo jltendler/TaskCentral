@@ -1,16 +1,18 @@
 <template>
-  <aside class="w-80 shrink-0 hidden lg:block border-l border-white/5 bg-slate-900/40 backdrop-blur-md"> <!-- hidden when below large screen -->
+  <aside class="w-80 shrink-0 hidden lg:block border-l border-slate-normal/10 bg-slate-darker/40 backdrop-blur-md"> <!-- hidden when below large screen -->
     <div class="sticky top-24 p-8 space-y-8 max-h-[calc(100vh-6rem)] overflow-y-auto">
+      <h2 class="text-2xl font-black text-white tracking-tight">At A Glance</h2>
+      
       <!-- Priority Tasks Section -->
       <div>
         <div 
-          class="flex items-center justify-between mb-6 text-amber-500 cursor-pointer group/header"
+          class="flex items-center justify-between mb-6 text-warning cursor-pointer group/header"
           @click="isPriorityCollapsed = !isPriorityCollapsed"
         >
           <div class="flex items-center gap-2">
             <font-awesome-icon icon="star" class="h-6 w-6" />
             <h2 class="text-xl font-bold tracking-tight">Priority Tasks</h2>
-            <span class="ml-2 px-1.5 py-0.5 rounded-md bg-amber-500/10 text-[10px] font-black uppercase tracking-widest">{{ priorityItems.length }}</span>
+            <span class="ml-2 px-1.5 py-0.5 rounded-md bg-warning/10 text-[10px] font-black uppercase tracking-widest">{{ priorityItems.length }}</span>
           </div>
           <font-awesome-icon 
             icon="chevron-down" 
@@ -22,10 +24,10 @@
         <transition name="expand">
           <div v-show="!isPriorityCollapsed">
             <div v-if="priorityLoading" class="flex justify-center py-8">
-              <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-amber-500"></div>
+              <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-warning"></div>
             </div>
 
-            <div v-else-if="priorityItems.length === 0" class="text-center py-8 text-slate-500 text-sm">
+            <div v-else-if="priorityItems.length === 0" class="text-center py-8 text-slate-normal text-sm">
               <p>No priority tasks set.</p>
               <p class="mt-2 text-[10px] uppercase tracking-widest font-bold">Star items to see them here</p>
             </div>
@@ -34,24 +36,15 @@
               <div 
                 v-for="item in sortedPriorityItems" 
                 :key="item.id" 
-                class="group p-3 rounded-xl bg-white/5 border border-white/5 hover:border-amber-500/30 transition-all cursor-pointer"
+                class="group p-3 rounded-xl bg-white/5 border border-white/5 hover:border-warning/30 transition-all cursor-pointer"
                 :class="item.isCompleted ? 'opacity-40 grayscale-[0.5]' : ''"
                 @click="goToList(item.todoListId)"
               >
                 <div class="flex items-start gap-3">
-                  <div 
-                    class="w-5 h-5 rounded-lg border cursor-pointer flex items-center justify-center transition-all shrink-0 mt-0.5"
-                    :class="item.isCompleted ? 'bg-emerald-500 border-emerald-500' : 'border-slate-700 group-hover:border-amber-500'"
-                    @click.stop="togglePriorityItem(item)"
-                  >
-                    <svg v-if="item.isCompleted" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
                   <div class="flex-grow min-w-0">
                     <h3 
                       class="text-sm font-medium transition-all truncate"
-                      :class="item.isCompleted ? 'text-slate-500 line-through' : 'text-white group-hover:text-amber-400'"
+                      :class="item.isCompleted ? 'text-slate-normal line-through' : 'text-white group-hover:text-warning'"
                     >
                       {{ item.title }}
                     </h3>
@@ -65,7 +58,7 @@
                     </p>
                   </div>
                   <div class="shrink-0 self-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-warning" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
@@ -79,13 +72,13 @@
       <!-- Due Soon Section -->
       <div>
         <div 
-          class="flex items-center justify-between mb-6 text-blue-400 cursor-pointer group/header"
+          class="flex items-center justify-between mb-6 text-info cursor-pointer group/header"
           @click="isDueSoonCollapsed = !isDueSoonCollapsed"
         >
           <div class="flex items-center gap-2">
             <font-awesome-icon icon="clock" class="h-6 w-6" />
             <h2 class="text-xl font-bold tracking-tight">Due Soon</h2>
-            <span class="ml-2 px-1.5 py-0.5 rounded-md bg-blue-400/10 text-[10px] font-black uppercase tracking-widest">{{ dueSoonItems.length }}</span>
+            <span class="ml-2 px-1.5 py-0.5 rounded-md bg-info/10 text-[10px] font-black uppercase tracking-widest">{{ dueSoonItems.length }}</span>
           </div>
           <font-awesome-icon 
             icon="chevron-down" 
@@ -104,10 +97,10 @@
         >
           <div v-show="!isDueSoonCollapsed">
             <div v-if="dueSoonLoading" class="flex justify-center py-8">
-              <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-400"></div>
+              <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-info"></div>
             </div>
 
-            <div v-else-if="dueSoonItems.length === 0" class="text-center py-8 text-slate-500 text-sm">
+            <div v-else-if="dueSoonItems.length === 0" class="text-center py-8 text-slate-normal text-sm">
               <p>No items due soon.</p>
               <p class="mt-2 text-[10px] uppercase tracking-widest font-bold">Items due within 7 days appear here</p>
             </div>
@@ -116,21 +109,12 @@
               <div 
                 v-for="item in dueSoonItems" 
                 :key="item.id" 
-                class="group p-3 rounded-xl bg-white/5 border border-white/5 hover:border-blue-400/30 transition-all cursor-pointer"
+                class="group p-3 rounded-xl bg-white/5 border border-white/5 hover:border-info/30 transition-all cursor-pointer"
                 @click="goToListDueSoon(item.todoListId)"
               >
                 <div class="flex items-start gap-3">
-                  <div 
-                    class="w-5 h-5 rounded-lg border cursor-pointer flex items-center justify-center transition-all shrink-0 mt-0.5"
-                    :class="item.isCompleted ? 'bg-emerald-500 border-emerald-500' : 'border-slate-700 group-hover:border-blue-400'"
-                    @click.stop="toggleDueSoonItem(item)"
-                  >
-                    <svg v-if="item.isCompleted" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
                   <div class="flex-grow min-w-0">
-                    <h3 class="text-sm font-medium transition-all truncate text-white group-hover:text-blue-400">
+                    <h3 class="text-sm font-medium transition-all truncate text-white group-hover:text-info">
                       {{ item.title }}
                     </h3>
                     <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-1">
@@ -141,7 +125,7 @@
                     </p>
                   </div>
                   <div class="shrink-0 self-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
@@ -155,13 +139,13 @@
       <!-- Overdue Section -->
       <div>
         <div 
-          class="flex items-center justify-between mb-6 text-red-400 cursor-pointer group/header"
+          class="flex items-center justify-between mb-6 text-danger cursor-pointer group/header"
           @click="isOverdueCollapsed = !isOverdueCollapsed"
         >
           <div class="flex items-center gap-2">
             <font-awesome-icon icon="exclamation-triangle" class="h-6 w-6" />
             <h2 class="text-xl font-bold tracking-tight">Overdue</h2>
-            <span class="ml-2 px-1.5 py-0.5 rounded-md bg-red-400/10 text-[10px] font-black uppercase tracking-widest">{{ overdueItems.length }}</span>
+            <span class="ml-2 px-1.5 py-0.5 rounded-md bg-danger/10 text-[10px] font-black uppercase tracking-widest">{{ overdueItems.length }}</span>
           </div>
           <font-awesome-icon 
             icon="chevron-down" 
@@ -180,10 +164,10 @@
         >
           <div v-show="!isOverdueCollapsed">
             <div v-if="overdueLoading" class="flex justify-center py-8">
-              <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-red-400"></div>
+              <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-danger"></div>
             </div>
 
-            <div v-else-if="overdueItems.length === 0" class="text-center py-8 text-slate-500 text-sm">
+            <div v-else-if="overdueItems.length === 0" class="text-center py-8 text-slate-normal text-sm">
               <p>No overdue items.</p>
               <p class="mt-2 text-[10px] uppercase tracking-widest font-bold">Good work! :)</p>
             </div>
@@ -192,21 +176,12 @@
               <div 
                 v-for="item in overdueItems" 
                 :key="item.id" 
-                class="group p-3 rounded-xl bg-white/5 border border-white/5 hover:border-red-400/30 transition-all cursor-pointer"
+                class="group p-3 rounded-xl bg-white/5 border border-white/5 hover:border-danger/30 transition-all cursor-pointer"
                 @click="goToListOverdue(item.todoListId)"
               >
                 <div class="flex items-start gap-3">
-                  <div 
-                    class="w-5 h-5 rounded-lg border cursor-pointer flex items-center justify-center transition-all shrink-0 mt-0.5"
-                    :class="item.isCompleted ? 'bg-emerald-500 border-emerald-500' : 'border-slate-700 group-hover:border-red-400'"
-                    @click.stop="toggleOverdueItem(item)"
-                  >
-                    <svg v-if="item.isCompleted" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
                   <div class="flex-grow min-w-0">
-                    <h3 class="text-sm font-medium transition-all truncate text-white group-hover:text-red-400">
+                    <h3 class="text-sm font-medium transition-all truncate text-white group-hover:text-danger">
                       {{ item.title }}
                     </h3>
                     <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-1">
@@ -217,7 +192,7 @@
                     </p>
                   </div>
                   <div class="shrink-0 self-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-danger" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
@@ -247,22 +222,19 @@ const {
   priorityItems,
   sortedPriorityItems,
   loading: priorityLoading,
-  goToList,
-  toggleItem: togglePriorityItem
+  goToList
 } = usePriorityItems();
 
 const {
   items: dueSoonItems,
   loading: dueSoonLoading,
-  goToList: goToListDueSoon,
-  toggleItem: toggleDueSoonItem
+  goToList: goToListDueSoon
 } = useDueSoonItems();
 
 const {
   items: overdueItems,
   loading: overdueLoading,
-  goToList: goToListOverdue,
-  toggleItem: toggleOverdueItem
+  goToList: goToListOverdue
 } = useOverdueItems();
 </script>
 

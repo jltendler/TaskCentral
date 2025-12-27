@@ -14,7 +14,7 @@ export function useDueSoonItems() {
         isDueSoon
     } = useItemCache();
 
-    const { updatedItemEvent } = useItemEventBus();
+    const { updatedItemEvent, refreshAllEvent } = useItemEventBus();
     const router = useRouter();
     const loading = ref(true);
     const pollInterval = ref(null);
@@ -48,27 +48,12 @@ export function useDueSoonItems() {
         fetchDueSoonItems();
     });
 
+    watch(refreshAllEvent, () => {
+        fetchDueSoonItems();
+    });
+
     const goToList = (listId) => {
         router.push(`/list/${listId}`);
-    };
-
-    const toggleItem = async (item) => {
-        try {
-            const newCompletedStatus = !item.isCompleted;
-
-            // Optimistic update
-            updateItemInCaches(item.id, { isCompleted: newCompletedStatus });
-
-            await todoItemService.updateItem(item.todoListId, item.id, {
-                ...item,
-                isCompleted: newCompletedStatus
-            });
-
-            await fetchDueSoonItems();
-        } catch (error) {
-            console.error('Error toggling item:', error);
-            await fetchDueSoonItems();
-        }
     };
 
     const sortedDueSoonItems = computed(() => {
@@ -98,7 +83,6 @@ export function useDueSoonItems() {
         items: sortedDueSoonItems,
         loading,
         fetchDueSoonItems,
-        goToList,
-        toggleItem
+        goToList
     };
 }

@@ -13,12 +13,12 @@ export function usePriorityItems() {
         updateItemInCaches
     } = useItemCache();
 
-    const { updatedItemEvent, emitItemUpdate } = useItemEventBus();
+    const { updatedItemEvent, emitItemUpdate, refreshAllEvent } = useItemEventBus();
 
     // Use the cache ref directly for reactivity
     const priorityItems = getPriorityCacheRef();
     const loading = ref(true);
-    const POLL_TIME = 60000; //avoiding magic value
+    const POLL_TIME = 60000; //avoiding magic value, set to 60 seconds
     let pollInterval = null;
 
     const sortedPriorityItems = computed(() => {
@@ -52,30 +52,12 @@ export function usePriorityItems() {
         fetchPriorityItems();
     });
 
+    watch(refreshAllEvent, () => {
+        fetchPriorityItems();
+    });
+
     const goToList = (id) => {
         router.push({ name: 'todolist', params: { id } });
-    };
-
-    const toggleItem = async (item) => {
-        try {
-            const newCompletedStatus = !item.isCompleted;
-
-            // Optimistic update via cache system
-            updateItemInCaches(item.id, { isCompleted: newCompletedStatus });
-
-            // Also emit event for other listeners
-            emitItemUpdate({ ...item, isCompleted: newCompletedStatus });
-
-            await todoItemService.updateItem(item.todoListId, item.id, {
-                ...item,
-                isCompleted: newCompletedStatus
-            });
-
-            await fetchPriorityItems();
-        } catch (error) {
-            console.error('Error toggling item:', error);
-            await fetchPriorityItems();
-        }
     };
 
     onMounted(() => {
@@ -92,7 +74,6 @@ export function usePriorityItems() {
         sortedPriorityItems,
         loading,
         fetchPriorityItems,
-        goToList,
-        toggleItem
+        goToList
     };
 }
