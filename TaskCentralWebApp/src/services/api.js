@@ -7,6 +7,13 @@ const api = axios.create({
     },
 });
 
+// Request interceptor to add the user ID to headers
+api.interceptors.request.use(config => {
+    const userId = localStorage.getItem('currentUser') || 'default';
+    config.headers['X-User-Id'] = userId;
+    return config;
+});
+
 export const todoListService = {
     getLists: () => api.get('/todolists'),
     getList: (id) => api.get(`/todolists/${id}`),
@@ -25,6 +32,12 @@ export const todoItemService = {
     completeAll: (listId) => api.post(`/todolists/${listId}/items/complete-all`, {}),
     uncompleteAll: (listId) => api.post(`/todolists/${listId}/items/uncomplete-all`, {}),
     deleteItem: (listId, itemId) => api.delete(`/todolists/${listId}/items/${itemId}`),
+};
+
+
+export const userService = {
+    getUsers: () => api.get('/users'),
+    createUser: (user) => api.post('/users', user),
 };
 
 export default api;

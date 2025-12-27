@@ -15,13 +15,23 @@ namespace TaskCentralBackEnd.Controllers
             _context = context;
         }
 
+        private string GetCurrentUserId()
+        {
+            if (Request.Headers.TryGetValue("X-User-Id", out var userId))
+            {
+                return userId.ToString();
+            }
+            return "default";
+        }
+
         // GET: api/todoitems/priority
         [HttpGet("/api/todoitems/priority")]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetPriiorityItems()
         {
+            var userId = GetCurrentUserId();
             return await _context.TodoItems
-                .Where(i => i.IsPriority)
-                .Include(i => i.TodoList) //This populates the TodoList via a LEFT JOIN. 'Eager Loading'.
+                .Include(i => i.TodoList) 
+                .Where(i => i.IsPriority && i.TodoList.OwnerId == userId)
                 .ToListAsync();
         }
 
@@ -33,10 +43,11 @@ namespace TaskCentralBackEnd.Controllers
             // don't hide items that are "today" in the user's local time.
             var startRange = DateTime.UtcNow.AddDays(-1).Date;
             var endRange = DateTime.UtcNow.AddDays(8).Date;
+            var userId = GetCurrentUserId();
             
             return await _context.TodoItems
-                .Where(i => !i.IsCompleted && i.DueDate != null && i.DueDate >= startRange && i.DueDate <= endRange)
                 .Include(i => i.TodoList)
+                .Where(i => !i.IsCompleted && i.DueDate != null && i.DueDate >= startRange && i.DueDate <= endRange && i.TodoList.OwnerId == userId)
                 .ToListAsync();
         }
 
@@ -46,10 +57,11 @@ namespace TaskCentralBackEnd.Controllers
         {
             // Use a wider range (including today/tomorrow) so the client can filter locally with timezone context.
             var tomorrow = DateTime.UtcNow.AddDays(1).Date;
+            var userId = GetCurrentUserId();
             
             return await _context.TodoItems
-                .Where(i => !i.IsCompleted && i.DueDate != null && i.DueDate < tomorrow)
                 .Include(i => i.TodoList)
+                .Where(i => !i.IsCompleted && i.DueDate != null && i.DueDate < tomorrow && i.TodoList.OwnerId == userId)
                 .ToListAsync();
         }
 
@@ -57,6 +69,11 @@ namespace TaskCentralBackEnd.Controllers
         [HttpGet("/api/todolists/{listId}/items")]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems(int listId)
         {
+            var userId = GetCurrentUserId();
+            // Verify ownership of the list
+            var list = await _context.TodoLists.FirstOrDefaultAsync(l => l.Id == listId && l.OwnerId == userId);
+            if (list == null) return NotFound();
+
             return await _context.TodoItems.Where(i => i.TodoListId == listId).ToListAsync();
         }
 

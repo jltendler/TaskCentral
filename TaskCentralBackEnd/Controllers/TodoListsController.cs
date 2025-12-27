@@ -16,19 +16,33 @@ namespace TaskCentralBackEnd.Controllers
             _context = context;
         }
 
+        private string GetCurrentUserId()
+        {
+            if (Request.Headers.TryGetValue("X-User-Id", out var userId))
+            {
+                return userId.ToString();
+            }
+            return "default";
+        }
+
         // GET: api/TodoLists
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoList>>> GetTodoLists()
         {
-            return await _context.TodoLists.Include(l => l.Items).ToListAsync();
+            var userId = GetCurrentUserId();
+            return await _context.TodoLists
+                .Include(l => l.Items)
+                .Where(l => l.OwnerId == userId)
+                .ToListAsync();
         }
 
         // GET: api/TodoLists/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoList>> GetTodoList(int id)
         {
+            var userId = GetCurrentUserId();
             var todoList = await _context.TodoLists.Include(l => l.Items)
-                .FirstOrDefaultAsync(l => l.Id == id);
+                .FirstOrDefaultAsync(l => l.Id == id && l.OwnerId == userId);
 
             if (todoList == null)
             {
@@ -42,6 +56,7 @@ namespace TaskCentralBackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<TodoList>> PostTodoList(TodoList todoList)
         {
+            todoList.OwnerId = GetCurrentUserId();
             _context.TodoLists.Add(todoList);
             await _context.SaveChangesAsync();
 
@@ -56,6 +71,15 @@ namespace TaskCentralBackEnd.Controllers
             {
                 return BadRequest();
             }
+
+            var userId = GetCurrentUserId();
+            var existingList = await _context.TodoLists.AsNoTracking().FirstOrDefaultAsync(l => l.Id == id);
+            
+            if (existingList == null) return NotFound();
+            if (existingList.OwnerId != userId) return Forbid();
+
+            // Prevent changing the specific owner ID
+            todoList.OwnerId = userId;
 
             _context.Entry(todoList).State = EntityState.Modified;
 
@@ -82,7 +106,8 @@ namespace TaskCentralBackEnd.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoList(int id)
         {
-            var todoList = await _context.TodoLists.FindAsync(id);
+            var userId = GetCurrentUserId();
+            var todoList = await _context.TodoLists.FirstOrDefaultAsync(l => l.Id == id && l.OwnerId == userId);
             if (todoList == null)
             {
                 return NotFound();

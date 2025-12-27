@@ -11,6 +11,7 @@ namespace TaskCentralBackEnd.Data
 
         public DbSet<TodoList> TodoLists { get; set; }
         public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<User> Users { get; set; }
 
         // Since everything is bog-standard so far, no need for any EF overrides
         // protected override void OnModelCreating(ModelBuilder modelBuilder)

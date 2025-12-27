@@ -9,6 +9,9 @@
           <!--neat little gradient using tailwinds -->
           <span class="bg-clip-text text-transparent bg-gradient-to-br from-yellow-400 to-red-400">TaskCentral</span> 
         </router-link>
+        <div class="flex items-center gap-4">
+          <UserSwitcher />
+        </div>
       </div>
     </nav>
     
@@ -38,4 +41,5 @@
 
 <script setup>
 import PrioritySidebar from './components/PrioritySidebar.vue';
+import UserSwitcher from './components/UserSwitcher.vue';
 </script>
