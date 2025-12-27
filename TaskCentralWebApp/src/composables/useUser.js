@@ -59,7 +59,7 @@ export function useUser() {
         // However, if we do it inside createUser it might be jarring. 
         // Let's stick to reload for explicit switches, but maybe not for initial load.
         if (window.location.reload) {
-            window.location.reload();
+            window.location.href = '/';
         }
     };
 

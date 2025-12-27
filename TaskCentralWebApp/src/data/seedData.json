@@ -4,38 +4,32 @@
         "items": [
             {
                 "title": "Call Mom",
-                "isPriority": true,
                 "dueDateOffset": 0
             },
             {
                 "title": "Schedule Dentist Appointment",
-                "isPriority": false,
                 "dueDateOffset": 12
             },
             {
                 "title": "Pay Electricity Bill",
-                "isPriority": true,
                 "dueDateOffset": -1
             }
         ]
     },
     {
-        "name": "Work",
+        "name": "Work Projects",
         "items": [
             {
-                "title": "Finish Q4 Report",
-                "isPriority": true,
+                "title": "Finish the TPS Report",
                 "dueDateOffset": 0
             },
             {
                 "title": "Email Client about Updates",
-                "isPriority": false,
-                "dueDateOffset": 10
+                "dueDateOffset": 5
             },
             {
-                "title": "Team Meeting",
-                "isPriority": false,
-                "dueDateOffset": 11
+                "title": "Prepare for presentation",
+                "dueDateOffset": 1
             }
         ]
     },
@@ -44,18 +38,184 @@
         "items": [
             {
                 "title": "Milk",
-                "isPriority": false,
                 "dueDateOffset": 0
             },
             {
                 "title": "Eggs",
-                "isPriority": false,
-                "dueDateOffset": 9
+                "dueDateOffset": 0
             },
             {
                 "title": "Bread",
-                "isPriority": false,
-                "dueDateOffset": 12
+                "dueDateOffset": 2
+            },
+            {
+                "title": "Avocados",
+                "dueDateOffset": 1
+            }
+        ]
+    },
+    {
+        "name": "Trip to Canada",
+        "items": [
+            {
+                "title": "Book Flight",
+                "dueDateOffset": -5
+            },
+            {
+                "title": "Reserve Hotel",
+                "dueDateOffset": -4
+            },
+            {
+                "title": "Buy Travel Adapter",
+                "dueDateOffset": 2
+            },
+            {
+                "title": "Pack Suitcase",
+                "dueDateOffset": 3
+            }
+        ]
+    },
+    {
+        "name": "Home Improvement",
+        "items": [
+            {
+                "title": "Fix Leaky Faucet",
+                "dueDateOffset": -2
+            },
+            {
+                "title": "Paint Living Room",
+                "dueDateOffset": 14
+            },
+            {
+                "title": "Replace Lightbulbs",
+                "dueDateOffset": 0
+            }
+        ]
+    },
+    {
+        "name": "Fitness Goals",
+        "items": [
+            {
+                "title": "Bench 900 Lbs",
+                "dueDateOffset": -1
+            },
+            {
+                "title": "Run 500 miles",
+                "dueDateOffset": 1
+            },
+            {
+                "title": "Do 1000 pullups",
+                "dueDateOffset": 0
+            }
+        ]
+    },
+    {
+        "name": "Books",
+        "items": [
+            {
+                "title": "The Hobbit",
+                "dueDateOffset": 30
+            },
+            {
+                "title": "Microeconomics Textbook",
+                "dueDateOffset": 7
+            },
+            {
+                "title": "Dune",
+                "dueDateOffset": 15
+            }
+        ]
+    },
+    {
+        "name": "Music to listen to",
+        "items": [
+            {
+                "title": "Smooth Jazz",
+                "dueDateOffset": 3
+            },
+            {
+                "title": "Pop Rock",
+                "dueDateOffset": 7
+            },
+            {
+                "title": "Country",
+                "dueDateOffset": 15
+            }
+        ]
+    },
+    {
+        "name": "Movies to watch",
+        "items": [
+            {
+                "title": "Inception",
+                "dueDateOffset": 2
+            },
+            {
+                "title": "The Matrix",
+                "dueDateOffset": 1
+            },
+            {
+                "title": "Interstellar",
+                "dueDateOffset": 5
+            }
+        ]
+    },
+    {
+        "name": "Learn Vue.js",
+        "items": [
+            {
+                "title": "Watch Tutorial",
+                "dueDateOffset": -1
+            },
+            {
+                "title": "Build Sample App",
+                "dueDateOffset": 0
+            },
+            {
+                "title": "Read Documentation",
+                "dueDateOffset": 3
+            }
+        ]
+    },
+    {
+        "name": "Gifts",
+        "items": [
+            {
+                "title": "Dad's Birthday",
+                "dueDateOffset": 10
+            },
+            {
+                "title": "Anniversary Gift",
+                "dueDateOffset": 20
+            },
+            {
+                "title": "Neighbor's Birthday",
+                "dueDateOffset": 60
+            }
+        ]
+    },
+    {
+        "name": "Car Maintenance",
+        "items": [
+            {
+                "title": "Oil Change",
+                "dueDateOffset": -3
+            },
+            {
+                "title": "Rotate Tires",
+                "dueDateOffset": 4
+            },
+            {
+                "title": "Wash Car",
+                "dueDateOffset": 0
+            },
+            {
+                "title": "Fix Flat Tire",
+                "dueDateOffset": 0
+            },
+            {
+                "title": "Charge Battery",
+                "dueDateOffset": -3
             }
         ]
     }

@@ -40,8 +40,12 @@ npm run dev
 
 Open your browser to the URL shown in the terminal (should be `http://localhost:3000`, unless it was taken already).
 
+### Need a fresh start?
+
+Stop the backend (ctrl+C) and delete TaskCentralBackEnd/taskcentral.db
+
 ### Running Tests
-Run the frontend unit tests with Vitest:
+Run the frontend unit tests:
 
 ```bash
 cd TaskCentralWebApp
@@ -50,17 +54,29 @@ npm run test
 
 ### Assumptions
 
-
-A login system would already exist for me to leverage in a 'real' situation.
+A login system would already exist for me to leverage in a 'real' situation, so I made a super simple users system in order to avoid getting into the weeds of authentication.
 
 ### Tradeoffs
 The sidebar is hidden on mobile layouts as stacking it vertically became redundant and confusing.
 
 I leveraged font-awesome icons which adds an external dependency, but provides quick, conistent icons for the UI.
 
-The caching system was written in order to avoid constant API calls, and instead only make API calls when necessary, and every 60 seconds. This is a bit silly, as APIs are really good at serving data, but I wanted to try my hand at a caching system for it.
+The caching system was written in order to avoid constant API calls, and instead only make API calls when necessary, and every 60 seconds. This introduced potential desyncing in the case of multiple users or errors, and is probably overkill for these small data payloads.
 
-### Future Improvements
-HTTPS! This app is not secure currently.
+I used exclusively local timezones on the frontend to not get bogged down in timezone dilemmas.
 
-Scalability - adding additional users would require a more complex database structure with user IDs stored per list, and todo item.
+useSeeder is a strange thing to write tests for, but I wanted to demonstrate some mocks and spies.
+
+### Potential Improvements
+HTTPS! This app is not secure as-is, and everything is served unencrypted.
+
+X-User-Id could easily be 'hacked' to access other users data. JWTs for API auth would be a good future improvement.
+
+WebSockets for real-time updates would be preferred over polling/local caching.
+
+Pagination for better API scalability, the APIs currently return all data for a user. 
+
+.Net Tests - since the APIs are rather simple I left off tests, but as the complexity of the APIs grow these would be important to ensure the APIs are behaving as expected.
+
+E2E Testing - Playwright/Cypress, or other headless browser testing
+
