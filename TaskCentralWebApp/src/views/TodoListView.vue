@@ -26,12 +26,12 @@
       >
         <font-awesome-icon
           :icon="newItem.isPriority ? 'star' : ['fas', 'star']"
-          class="h-5 w-5 transition-colors"
+          class="h-5 w-5 transition-colors cursor-pointer"
           :class="newItem.isPriority ? 'text-warning' : 'text-slate-400 hover:text-slate-300'"
         />
         <!-- wow this syntax is excellent for dynamic tailwinds classes, seems to bypass the need for twmerge()-->
       </button>
-      <button @click="addItem" class="btn btn-primary h-[50px] px-8">Add Task</button>
+      <button @click="addItem" class="btn btn-primary h-[50px] px-8 cursor-pointer">Add Task</button>
     </div>
     <div v-if="loading" class="flex flex-col items-center justify-center py-20 text-slate-normal">
       <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary mb-4"></div>
@@ -43,7 +43,7 @@
         <button
           v-if="items.some(i => !i.isCompleted)"
           @click="checkAll"
-          class="text-sm font-bold text-primary hover:text-primary-light transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-primary/10"
+          class="text-sm font-bold text-primary hover:text-primary-light transition-colors flex items-center cursor-pointer gap-1.5 px-3 py-1.5 rounded-lg hover:bg-primary/10"
         >
           <font-awesome-icon icon="check" class="h-4 w-4" />
           Check All
@@ -51,7 +51,7 @@
         <button
           v-if="items.every(i => i.isCompleted)"
           @click="uncheckAll"
-          class="text-sm font-bold text-slate-normal hover:text-slate-300 transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-slate-400/10"
+          class="text-sm font-bold text-slate-normal hover:text-slate-300 transition-colors flex items-center cursor-pointer gap-1.5 px-3 py-1.5 rounded-lg hover:bg-slate-400/10"
         >
           <font-awesome-icon icon="times" />
           Uncheck All
@@ -97,7 +97,7 @@
         <div class="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             @click="togglePriority(item)"
-            class="text-slate-normal hover:text-warning transition-colors"
+            class="text-slate-normal hover:text-warning transition-colors !cursor-pointer"
           >
             <font-awesome-icon
               :icon="item.isPriority ? 'star' : ['fas', 'star']"
@@ -107,21 +107,21 @@
           </button>
 
           <!-- Due Date Picker -->
-          <div class="relative">
+          <div class="relative group/date p-2 rounded-lg hover:bg-info/10 transition-colors !cursor-pointer">
             <input
               type="date"
               :value="item.dueDate ? item.dueDate.split('T')[0] : ''"
               @change="(e) => setDueDate(item, e.target.value || null)"
-              class="absolute inset-0 opacity-0 cursor-pointer"
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
               :id="`date-${item.id}`"
             />
             <label
               :for="`date-${item.id}`"
-              class="text-slate-normal hover:text-info transition-colors cursor-pointer p-1.5 rounded-lg hover:bg-info/10 active:scale-95 flex items-center pointer-events-none"
+              class="text-slate-normal group-hover/date:text-info transition-colors cursor-pointer flex items-center pointer-events-none"
               :class="item.dueDate ? 'text-info' : ''"
               :title="item.dueDate ? `Due: ${formatDueDate(item.dueDate)}` : 'Set due date'"
             >
-              <font-awesome-icon icon="calendar-alt" class="h-5 w-5" />
+              <font-awesome-icon icon="calendar-alt" class="h-5 w-5 cursor-pointer" />
             </label>
           </div>
 
@@ -129,14 +129,14 @@
           <div class="flex flex-col opacity-0 group-hover:opacity-100 transition-opacity ml-2">
             <button
               @click.stop="moveItem(item, 'up')"
-              class="text-slate-normal hover:text-primary p-0.5 rounded hover:bg-white/5 active:scale-95 transition-all"
+              class="text-slate-normal hover:text-primary p-0.5 rounded hover:bg-white/5 active:scale-95 transition-all cursor-pointer"
               title="Move Up"
             >
               <font-awesome-icon icon="chevron-up" class="h-3 w-3" />
             </button>
             <button
               @click.stop="moveItem(item, 'down')"
-              class="text-slate-normal hover:text-primary p-0.5 rounded hover:bg-white/5 active:scale-95 transition-all"
+              class="text-slate-normal hover:text-primary p-0.5 rounded hover:bg-white/5 active:scale-95 transition-all cursor-pointer"
               title="Move Down"
             >
               <font-awesome-icon icon="chevron-down" class="h-3 w-3" />
@@ -145,7 +145,7 @@
 
           <button
             @click.stop="deleteItem(item.id)"
-            class="text-slate-normal hover:text-danger transition-colors opacity-0 group-hover:opacity-100 p-1.5 rounded-lg hover:bg-danger/10 active:scale-95"
+            class="text-slate-normal hover:text-danger transition-colors opacity-0 group-hover:opacity-100 p-1.5 rounded-lg hover:bg-danger/10 active:scale-95 cursor-pointer"
             title="Delete Task"
           >
             <font-awesome-icon icon="trash" class="h-5 w-5" />
