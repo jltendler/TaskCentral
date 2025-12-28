@@ -18,6 +18,7 @@ export function useUser() {
                 showCreateUserModal.value = true;
             }
             // If current user is not in the list (and list is not empty), default to first user or keep 'default' if it exists
+            // This shouldn't happen without manual database modification since we can't delete users in the demo.
             else if (!availableUsers.value.find(u => u.id === currentUser.value)) {
                 // Pick the first one
                 switchUser(availableUsers.value[0].id);

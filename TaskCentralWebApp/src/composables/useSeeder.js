@@ -17,7 +17,7 @@ export function useSeeder() {
         return date.toISOString().split('T')[0];
     };
 
-    // Fisher-Yates Shuffle https://dev.to/tanvir_azad/fisher-yates-shuffle-the-right-way-to-randomize-an-array-4d2p
+    // This is using Fisher-Yates Shuffle https://dev.to/tanvir_azad/fisher-yates-shuffle-the-right-way-to-randomize-an-array-4d2p
     const shuffleArray = (array) => {
         const arr = [...array];
         for (let i = arr.length - 1; i > 0; i--) {
@@ -28,7 +28,7 @@ export function useSeeder() {
     };
 
     const seed = async (onSuccess) => {
-        if (isSeeding.value) return; //Don't seed more if it's already seeding
+        if (isSeeding.value) return; //Don't seed more, in case user double clicks.
         isSeeding.value = true;
 
         try {

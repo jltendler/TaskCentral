@@ -10,7 +10,6 @@ export function useOverdueItems() {
         updateOverdueCache,
         isOverdueCacheValid,
         getOverdueCacheRef,
-        updateItemInCaches,
         isOverdue
     } = useItemCache();
 
@@ -25,7 +24,7 @@ export function useOverdueItems() {
 
     const fetchOverdueItems = async () => {
         // Use cache if valid
-        if (isOverdueCacheValid() && items.value.length > 0) {
+        if (isOverdueCacheValid()) {
             loading.value = false;
             return;
         }

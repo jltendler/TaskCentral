@@ -98,13 +98,13 @@ export function useItemCache() {
             };
             priorityItemsCache.value[priorityIndex] = updatedItem;
 
-            // If no longer priority, remove from cache
+            // If no longer priority, remove from priority cache
             if (!updatedItem.isPriority) {
                 priorityItemsCache.value = priorityItemsCache.value.filter(item => item.id !== itemId);
             }
         }
 
-        // Update in due soon cache
+        // Update in due soon cache if applicable
         const dueSoonIndex = dueSoonItemsCache.value.findIndex(item => item.id === itemId);
         if (dueSoonIndex !== -1) {
             const updatedItem = {
@@ -120,7 +120,7 @@ export function useItemCache() {
             }
         }
 
-        // Update in overdue cache
+        // Update in overdue cache if applicable
         const overdueIndex = overdueItemsCache.value.findIndex(item => item.id === itemId);
         if (overdueIndex !== -1) {
             const updatedItem = {

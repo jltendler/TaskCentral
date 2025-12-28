@@ -9,8 +9,7 @@ export function usePriorityItems() {
     const {
         updatePriorityCache,
         isPriorityCacheValid,
-        getPriorityCacheRef,
-        updateItemInCaches
+        getPriorityCacheRef
     } = useItemCache();
 
     const { updatedItemEvent, emitItemUpdate, refreshAllEvent } = useItemEventBus();
@@ -32,7 +31,7 @@ export function usePriorityItems() {
 
     const fetchPriorityItems = async () => {
         // Use cache if valid
-        if (isPriorityCacheValid() && priorityItems.value.length > 0) {
+        if (isPriorityCacheValid()) {
             loading.value = false;
             return;
         }

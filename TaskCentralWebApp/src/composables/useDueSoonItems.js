@@ -10,7 +10,6 @@ export function useDueSoonItems() {
         updateDueSoonCache,
         isDueSoonCacheValid,
         getDueSoonCacheRef,
-        updateItemInCaches,
         isDueSoon
     } = useItemCache();
 
@@ -24,8 +23,8 @@ export function useDueSoonItems() {
     const items = getDueSoonCacheRef();
 
     const fetchDueSoonItems = async () => {
-        // Use cache if valid
-        if (isDueSoonCacheValid() && items.value.length > 0) {
+        // If cache is still valid don't do anything, just return.
+        if (isDueSoonCacheValid()) {
             loading.value = false;
             return;
         }

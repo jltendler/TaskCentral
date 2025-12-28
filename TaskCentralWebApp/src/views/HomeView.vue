@@ -7,7 +7,7 @@
       </button>
     </div>
 
-    <!-- Demo Data Button (Only show if no lists) -->
+    <!-- Seed Dummy Data Button (Only show if no lists) -->
     <div v-if="lists.length === 0 && !loading" class="mb-8 text-center">
         <button 
             @click="runSeeder" 
@@ -58,14 +58,12 @@ const {
   lists,
   loading,
   showAddModal,
-  newList,
   listIdDeleting,
   createList,
   requestDelete,
   cancelDelete,
   deleteList,
   goToList,
-  formatDate,
   fetchLists
 } = useTodoLists();
 
