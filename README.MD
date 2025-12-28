@@ -30,7 +30,7 @@ dotnet run --launch-profile http
 ```
 
 ### 2. Start the Frontend App
-The frontend is built with Vite and proxies API requests to the backend.
+The frontend is built with Vite and sends API requests to the backend.
 
 ```bash
 cd TaskCentralWebApp
@@ -38,11 +38,11 @@ npm install
 npm run dev
 ```
 
-Open your browser to the URL shown in the terminal (should be `http://localhost:3000`, unless it was taken already).
+Open your browser to the URL shown in the terminal (should be `http://localhost:3000`, unless it was taken already - in which case see terminal for where it started).
 
-### Need a fresh start?
+### Need to clear the DB?
 
-Stop the backend (ctrl+C) and delete TaskCentralBackEnd/taskcentral.db
+Stop the backend (ctrl+C) and delete TaskCentralBackEnd/taskcentral.db, then restart the backend. A fresh DB will be created.
 
 ### Running Tests
 Run the frontend unit tests:
