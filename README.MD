@@ -84,3 +84,8 @@ E2E Testing - Playwright/Cypress, or other headless browser testing
 
 Create methods for createMultipleItems and createMultipleLists, instead of calling multiple single creates for data seeding.
 
+### Previews
+Main View:
+![Main View](Preview/MainPreview.png)
+List View:
+![List View](Preview/ListPreview.png)
