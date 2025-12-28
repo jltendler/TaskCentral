@@ -15,13 +15,13 @@ namespace TaskCentralBackEnd.Controllers
             _context = context;
         }
 
-        private string GetCurrentUserId()
+        private int GetCurrentUserId()
         {
-            if (Request.Headers.TryGetValue("X-User-Id", out var userId))
+            if (Request.Headers.TryGetValue("X-User-Id", out var userId) && int.TryParse(userId, out var id))
             {
-                return userId.ToString();
+                return id;
             }
-            return "default";
+            return -1; // Default/Invalid
         }
 
         // GET: api/todoitems/priority

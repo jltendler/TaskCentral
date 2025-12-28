@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { userService } from '../services/api';
 
-const currentUser = ref(localStorage.getItem('currentUser') || 'default');
+const currentUser = ref(parseInt(localStorage.getItem('currentUser')) || null);
 const availableUsers = ref([]);
 const isLoadingUsers = ref(false);
 const showCreateUserModal = ref(false);
@@ -19,13 +19,8 @@ export function useUser() {
             }
             // If current user is not in the list (and list is not empty), default to first user or keep 'default' if it exists
             else if (!availableUsers.value.find(u => u.id === currentUser.value)) {
-                // Try to fallback to 'default' if it exists in the list
-                if (availableUsers.value.find(u => u.id === 'default')) {
-                    switchUser('default');
-                } else {
-                    // Otherwise just pick the first one
-                    switchUser(availableUsers.value[0].id);
-                }
+                // Pick the first one
+                switchUser(availableUsers.value[0].id);
             }
         } catch (error) {
             console.error('Failed to fetch users:', error);
@@ -35,14 +30,28 @@ export function useUser() {
     };
 
     const createUser = async (name) => {
-        // Simple ID generation: lowercase, remove spaces
-        const id = name.toLowerCase().replace(/\s+/g, '');
-
         try {
-            const newUser = { id, name };
-            await userService.createUser(newUser);
-            await fetchUsers(); // Refresh list
-            switchUser(id); // Switch to new user
+            // ID is now handled by backend (int)
+            const newUser = { name };
+            const response = await userService.createUser(newUser);
+            // Ideally backend returns the created user with ID
+
+            await fetchUsers(); // Refresh list to get the new ID in the list
+
+            // We need to find the user we just added. 
+            // Since we don't have the ID from the simple list fetch necessarily ordered, 
+            // we rely on the response from createUser if possible.
+            // But userService.createUser returns axios response.
+
+            // Fallback: finding the user by name (risky if duplicates allowed, but fine for MVP)
+            // Or use the ID from the response
+            if (response.data && response.data.id) {
+                switchUser(response.data.id);
+            } else {
+                const created = availableUsers.value.find(u => u.name === name);
+                if (created) switchUser(created.id);
+            }
+
             showCreateUserModal.value = false;
             return true;
         } catch (error) {
@@ -54,10 +63,7 @@ export function useUser() {
     const switchUser = (userId) => {
         currentUser.value = userId;
         localStorage.setItem('currentUser', userId);
-        // We might want to reload to refresh all data, or we can rely on reactivity if we set it up right.
-        // For now, reloading is safer to ensure all Axios interceptors and components catch up.
-        // However, if we do it inside createUser it might be jarring. 
-        // Let's stick to reload for explicit switches, but maybe not for initial load.
+        // We might want to reload to refresh all data
         if (window.location.reload) {
             window.location.href = '/';
         }

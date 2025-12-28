@@ -2,7 +2,7 @@
   <div class="relative group">
     <button class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all text-sm font-medium text-white border border-white/10">
       <div class="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-[10px] font-bold">
-        {{ currentUser.charAt(0).toUpperCase() }}
+        {{ currentUserName ? String(currentUserName).charAt(0).toUpperCase() : '?' }}
       </div>
       <span>{{ currentUserName }}</span>
       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70 group-hover:rotate-180 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">

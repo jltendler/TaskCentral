@@ -27,24 +27,14 @@ namespace TaskCentralBackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            if (string.IsNullOrWhiteSpace(user.Id))
-            {
-                // Simple slugify for ID if only name is provided, or just error
-                return BadRequest("User ID is required.");
-            }
-
-            if (UserExists(user.Id))
-            {
-                return Conflict("User ID already exists.");
-            }
-
+            // ID is auto-generated
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUsers", new { id = user.Id }, user);
         }
 
-        private bool UserExists(string id)
+        private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
         }
