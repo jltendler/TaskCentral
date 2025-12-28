@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen">
     <nav class="glass mb-8 rounded-b-2xl rounded-t-none border-t-0 sticky top-0 z-50">
-      <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="w-full px-6 py-4 flex justify-between items-center">
         <router-link to="/" class="text-2xl font-extrabold text-white flex items-center gap-2 group">
           <span class="transition-transform group-hover:scale-110">
             <img src="/favicon.svg" alt="Logo" class="h-8 w-8" />
@@ -36,10 +36,12 @@
       </main>
       <PrioritySidebar />
     </div>
+    <CreateUserModal />
   </div>
 </template>
 
 <script setup>
 import PrioritySidebar from './components/PrioritySidebar.vue';
 import UserSwitcher from './components/UserSwitcher.vue';
+import CreateUserModal from './components/CreateUserModal.vue';
 </script>

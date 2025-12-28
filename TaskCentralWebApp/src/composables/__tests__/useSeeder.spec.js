@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useSeeder } from '../useSeeder';
 import { todoListService, todoItemService } from '../../services/api';
 import { useItemCache } from '../useItemCache';
@@ -75,10 +75,8 @@ describe('useSeeder', () => {
         // Should create at least 3 lists
         expect(todoListService.createList.mock.calls.length).toBeGreaterThanOrEqual(3);
 
-        // Should create items
         expect(todoItemService.createItem).toHaveBeenCalled();
 
-        // Should refresh caches
         expect(invalidateAllCachesMock).toHaveBeenCalled();
         expect(emitRefreshAllMock).toHaveBeenCalled();
     });
@@ -86,17 +84,16 @@ describe('useSeeder', () => {
     it('should prevent concurrent calls', async () => {
         const { seed, isSeeding } = useSeeder();
 
-        // Make createList take a moment and return valid data
         todoListService.createList.mockImplementation(() => new Promise(r =>
             setTimeout(() => r({ data: { id: 100 } }), 10)
         ));
 
         const p1 = seed();
-        const p2 = seed(); // Should return early
+        const p2 = seed();
 
         await Promise.all([p1, p2]);
 
-        // We expect normal number of calls from one execution, not double
+
         const calls = todoListService.createList.mock.calls.length;
         expect(calls).toBeLessThanOrEqual(5);
     });

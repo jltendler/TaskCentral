@@ -57,14 +57,12 @@ describe('useItemCache', () => {
         });
 
         it('should add due soon items to due soon cache', () => {
-            // Tomorrow is Due Soon
             const item = { id: '2', title: 'Test', dueDate: TOMORROW_ISO };
             addItemToCaches(item);
             expect(getDueSoonCacheRef().value).toContainEqual(item);
         });
 
         it('should add overdue items to overdue cache', () => {
-            // Yesterday is Overdue
             const item = { id: '3', title: 'Test', dueDate: YESTERDAY_ISO };
             addItemToCaches(item);
             expect(getOverdueCacheRef().value).toContainEqual(item);

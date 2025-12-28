@@ -6,7 +6,7 @@ A modern, full-stack task management demo featuring a .NET Core API backend and 
 
 ### Backend (`TaskCentralBackEnd`)
 - **Framework**: ASP.NET Core Web API
-- **Database**: SQLite (via Entity Framework Core)
+- **Database**: SQLite via Entity Framework Core
 - **ORM**: Entity Framework Core
 
 ### Frontend (`TaskCentralWebApp`)
@@ -64,6 +64,8 @@ I leveraged font-awesome icons which adds an external dependency, but provides q
 The caching system was written in order to avoid constant API calls, and instead only make API calls when necessary, and every 60 seconds. This introduced potential desyncing in the case of multiple users or errors, and is probably overkill for these small data payloads.
 
 I used exclusively local timezones on the frontend to not get bogged down in timezone dilemmas.
+
+Deleting a list is only shown when a list is empty or the items are complete. This isn't obvious, but I didn't want to have users accidentally delete items on a list that weren't complete.
 
 useSeeder is a strange thing to write tests for, but I wanted to demonstrate some mocks and spies.
 
